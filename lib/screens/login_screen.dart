@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
+import 'package:homeworks_01/screens/account_registration.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,7 +33,10 @@ class _LoginStateScreen extends State<LoginScreen> {
   }
 
   Widget get _logo {
-    return Image.asset("assets/images/book_logo.png", width: 270);
+    return Padding(
+      padding: const EdgeInsets.only(top: 60, bottom: 60),
+      child: Image.asset("assets/images/book_logo.png", width: 270),
+    );
   }
 
   Widget get _or {
@@ -45,15 +49,43 @@ class _LoginStateScreen extends State<LoginScreen> {
   Widget get _faceAndMail {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 0, bottom: 40),
+        padding: const EdgeInsets.only(top: 0, bottom: 35),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              child: Icon(Icons.facebook_sharp, color: Colors.blueAccent),
+              child: TextButton(
+                style: ButtonStyle(
+                  foregroundColor: WidgetStateProperty.all(Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AccountOptionsScreen(),
+                    ),
+                  );
+                },
+                child: Icon(Icons.facebook_sharp, color: Colors.blue, size: 30),
+              ),
             ),
-            SizedBox(width: 10),
-            SizedBox(child: Icon(Icons.email_sharp, color: Colors.red)),
+            SizedBox(width: 5),
+            SizedBox(
+              child: TextButton(
+                style: ButtonStyle(
+                  foregroundColor: WidgetStateProperty.all(Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AccountOptionsScreen(),
+                    ),
+                  );
+                },
+                child: Icon(Icons.mail, color: Colors.red, size: 30),
+              ),
+            ),
           ],
         ),
       ),
@@ -83,7 +115,7 @@ class _LoginStateScreen extends State<LoginScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AccountOptionsScreen(),
+                      builder: (context) => AccountRegistration(),
                     ),
                   );
                 },
@@ -98,7 +130,7 @@ class _LoginStateScreen extends State<LoginScreen> {
 
   Widget get _userTxt {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 5),
+      padding: const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 15),
       child: TextFormField(
         style: TextStyle(fontSize: 15, color: Colors.black),
         decoration: InputDecoration(
@@ -154,7 +186,7 @@ class _LoginStateScreen extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 15, right: 20, bottom: 30),
+          padding: EdgeInsets.only(top: 15, right: 20, bottom: 20),
           child: SizedBox(
             child: TextButton(
               style: ButtonStyle(
@@ -187,7 +219,12 @@ class _LoginStateScreen extends State<LoginScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {},
-        child: Text('Log In', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 18),),
+        child: Text(
+          'Log In',
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 18),
+        ),
       ),
     );
   }

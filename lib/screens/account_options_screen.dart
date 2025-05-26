@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeworks_01/screens/login_screen.dart';
 
 class AccountOptionsScreen extends StatelessWidget {
   const AccountOptionsScreen({super.key});
@@ -9,14 +10,20 @@ class AccountOptionsScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [_logo, SizedBox(height: 170,) ,_createAccountBtn, SizedBox(height: 20,), _loginBtn],
+          children: [
+            _logo,
+            SizedBox(height: 170),
+            _createAccountBtn,
+            SizedBox(height: 20),
+            _loginBtn(context),
+          ],
         ),
       ),
     );
   }
 
   Widget get _logo {
-    return Image.asset("assets/images/book_logo.png", width: 350,);
+    return Image.asset("assets/images/book_logo.png", width: 310);
   }
 
   Widget get _createAccountBtn {
@@ -27,9 +34,7 @@ class AccountOptionsScreen extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {},
         child: Text('Create Account'),
@@ -37,7 +42,7 @@ class AccountOptionsScreen extends StatelessWidget {
     );
   }
 
-  Widget get _loginBtn{
+  Widget _loginBtn(BuildContext context) {
     return SizedBox(
       width: 340,
       height: 50,
@@ -45,13 +50,16 @@ class AccountOptionsScreen extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.red,
-          side: BorderSide(color: Colors.red, width: 1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
+          side: const BorderSide(color: Colors.red, width: 1),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
-        onPressed: () {},
-        child: Text('Log In as Guest'),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
+          );
+        },
+        child: const Text('Log In as Guest'),
       ),
     );
   }

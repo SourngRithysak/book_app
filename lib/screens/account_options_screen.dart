@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeworks_01/screens/account_registration.dart';
 import 'package:homeworks_01/screens/login_screen.dart';
 
 class AccountOptionsScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class AccountOptionsScreen extends StatelessWidget {
           children: [
             _logo,
             SizedBox(height: 170),
-            _createAccountBtn,
+            _createAccountBtn(context),
             SizedBox(height: 20),
             _loginBtn(context),
           ],
@@ -26,7 +27,7 @@ class AccountOptionsScreen extends StatelessWidget {
     return Image.asset("assets/images/book_logo.png", width: 310);
   }
 
-  Widget get _createAccountBtn {
+  Widget _createAccountBtn(BuildContext context) {
     return SizedBox(
       width: 340,
       height: 50,
@@ -36,7 +37,9 @@ class AccountOptionsScreen extends StatelessWidget {
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AccountRegistration()));
+        },
         child: Text('Create Account'),
       ),
     );

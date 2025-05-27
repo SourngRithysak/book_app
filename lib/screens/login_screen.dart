@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
 import 'package:homeworks_01/screens/account_registration.dart';
+import 'package:homeworks_01/screens/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,7 +23,7 @@ class _LoginStateScreen extends State<LoginScreen> {
             _userTxt,
             _passtxt,
             _forgetPass,
-            _loginBtn,
+            _loginBtn(context),
             _or,
             _faceAndMail,
             _register(context),
@@ -208,7 +209,7 @@ class _LoginStateScreen extends State<LoginScreen> {
     );
   }
 
-  Widget get _loginBtn {
+  Widget _loginBtn(BuildContext context){
     return SizedBox(
       width: 370,
       height: 50,
@@ -218,7 +219,9 @@ class _LoginStateScreen extends State<LoginScreen> {
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+        },
         child: Text(
           'Log In',
           style: Theme.of(

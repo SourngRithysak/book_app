@@ -18,7 +18,8 @@ class _HomeStateScreen extends State<HomeScreen> {
           children: [
             Column(
               children: [
-                _header
+                _header,
+                _userName
               ],
             )
           ],
@@ -43,6 +44,24 @@ class _HomeStateScreen extends State<HomeScreen> {
               , size: 35, color: Colors.grey)),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget get _userName{
+    return Padding(
+      padding: EdgeInsets.only(top: 5, left: 30, bottom: 20),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(child: Text("Hello, ", style: TextStyle(color: Colors.redAccent, fontSize: 20),),),
+              SizedBox(width: 10,),
+              SizedBox(child: Text("Rithysak", style: TextStyle(color: Colors.redAccent, fontSize: 20),),)
+            ],
+          )
         ],
       ),
     );

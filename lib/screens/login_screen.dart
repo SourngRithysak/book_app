@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
 import 'package:homeworks_01/screens/account_registration.dart';
 import 'package:homeworks_01/screens/main_screen.dart';
+import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,7 +37,7 @@ class _LoginStateScreen extends State<LoginScreen> {
   Widget get _logo {
     return Padding(
       padding: const EdgeInsets.only(top: 60, bottom: 60),
-      child: Image.asset("assets/images/book_logo.png", width: 270),
+      child: LogoWidget(),
     );
   }
 
@@ -211,6 +212,7 @@ class _LoginStateScreen extends State<LoginScreen> {
 
   Widget _loginBtn(BuildContext context){
     return SizedBox(
+      // width: MediaQuery.of(context).size.width,
       width: 370,
       height: 50,
       child: ElevatedButton(

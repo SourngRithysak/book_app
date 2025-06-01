@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homeworks_01/screens/account_registration.dart';
-import 'package:homeworks_01/screens/login_screen.dart';
+import 'package:homeworks_01/routes/app_routes.dart';
+import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class AccountOptionsScreen extends StatelessWidget {
   const AccountOptionsScreen({super.key});
@@ -12,7 +12,7 @@ class AccountOptionsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _logo,
+            LogoWidget(),
             SizedBox(height: 170),
             _createAccountBtn(context),
             SizedBox(height: 20),
@@ -23,9 +23,9 @@ class AccountOptionsScreen extends StatelessWidget {
     );
   }
 
-  Widget get _logo {
-    return Image.asset("assets/images/book_logo.png", width: 310);
-  }
+  // Widget get _logo {
+  //   return Image.asset("assets/images/book_logo.png", width: 310);
+  // }
 
   Widget _createAccountBtn(BuildContext context) {
     return SizedBox(
@@ -38,7 +38,7 @@ class AccountOptionsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AccountRegistration()));
+          AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.accountRegistration);
         },
         child: Text('Create Account'),
       ),
@@ -57,10 +57,7 @@ class AccountOptionsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()),
-          );
+          AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.loginScreen);
         },
         child: const Text('Log In as Guest'),
       ),

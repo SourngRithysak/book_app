@@ -13,15 +13,15 @@ class SplashScreen extends StatelessWidget{
       splash: Column(
         children: [
           Center(
-            child: LottieBuilder.asset("assets/images/Animation - 1748001832320.json")
+            child: LottieBuilder.asset("assets/images/Animation - 1748603753363.json")
             ,
           )
         ],
       ), 
       nextScreen: const AccountOptionsScreen(),
-      splashIconSize: 700.00,
+      splashIconSize: 270.00,
       backgroundColor: Colors.white,
-      duration: 4100,
+      duration: 3100,
     );
   }
 }

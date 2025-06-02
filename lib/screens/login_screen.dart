@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
-import 'package:homeworks_01/screens/account_registration.dart';
-import 'package:homeworks_01/screens/main_screen.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,23 +11,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginStateScreen extends State<LoginScreen> {
+  bool _isValidUsername = false;
+
+  bool _isValidPass = false;
+
+  bool _obscureText = false;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _usernameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _logo,
-            SizedBox(height: 25),
-            _userTxt,
-            _passtxt,
-            _forgetPass,
-            _loginBtn(context),
-            _or,
-            _faceAndMail,
-            _register(context),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              _logo,
+              SizedBox(height: 25),
+              _userTxt,
+              _passtxt,
+              _forgetPass,
+              _loginBtn(context),
+              _or,
+              _faceAndMail,
+              _register(context),
+            ],
+          ),
         ),
       ),
     );
@@ -114,11 +131,8 @@ class _LoginStateScreen extends State<LoginScreen> {
                   foregroundColor: WidgetStateProperty.all(Colors.black),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountRegistration(),
-                    ),
+                  AppRoutes.key.currentState?.pushReplacementNamed(
+                    AppRoutes.accountRegistration,
                   );
                 },
                 child: Text('Register', style: TextStyle(fontSize: 18)),
@@ -134,7 +148,23 @@ class _LoginStateScreen extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 15),
       child: TextFormField(
+        controller: _usernameController,
         style: TextStyle(fontSize: 15, color: Colors.black),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "PLease input username!";
+          }
+          return null;
+        },
+        onChanged: (value) {
+          final isValidUsername = RegExp(
+            r'^[a-zA-Z0-9._]{3,20}$',
+          ).hasMatch(value);
+
+          setState(() {
+            _isValidUsername = isValidUsername;
+          });
+        },
         decoration: InputDecoration(
           labelText: "Username",
           labelStyle: TextStyle(
@@ -142,7 +172,10 @@ class _LoginStateScreen extends State<LoginScreen> {
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),
-          suffixIcon: Icon(Icons.close, color: Colors.grey),
+          suffixIcon:
+              _isValidUsername
+                  ? Icon(Icons.check_circle, color: Colors.green)
+                  : Icon(Icons.check_circle),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -160,7 +193,29 @@ class _LoginStateScreen extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 5),
       child: TextFormField(
+        onChanged: (value) {
+          if (value.length < 6) {
+            setState(() {
+              _isValidPass = true;
+            });
+          } else {
+            setState(() {
+              _isValidPass = false;
+            });
+          }
+        },
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Please input password!";
+          }
+
+          if (_isValidPass) {
+            return "Six digits or more must be entered!";
+          }
+          return null;
+        },
         style: TextStyle(fontSize: 15, color: Colors.black),
+        obscureText: _obscureText,
         decoration: InputDecoration(
           labelText: "Password",
           labelStyle: TextStyle(
@@ -168,7 +223,17 @@ class _LoginStateScreen extends State<LoginScreen> {
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),
-          suffixIcon: Icon(Icons.visibility_off_outlined, color: Colors.grey),
+          suffixIcon: GestureDetector(
+            child:
+                _obscureText
+                    ? Icon(Icons.visibility_off)
+                    : Icon(Icons.visibility, color: Colors.green),
+            onTap: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -210,7 +275,7 @@ class _LoginStateScreen extends State<LoginScreen> {
     );
   }
 
-  Widget _loginBtn(BuildContext context){
+  Widget _loginBtn(BuildContext context) {
     return SizedBox(
       // width: MediaQuery.of(context).size.width,
       width: 370,
@@ -222,7 +287,13 @@ class _LoginStateScreen extends State<LoginScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+          if (_formKey.currentState!.validate()) {
+            String username = _usernameController.text.trim();
+
+            AppRoutes.key.currentState?.pushReplacementNamed(
+              AppRoutes.mainScreen, arguments: username
+            );
+          } else {}
         },
         child: Text(
           'Log In',

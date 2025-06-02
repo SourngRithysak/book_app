@@ -16,14 +16,9 @@ class _HomeStateScreen extends State<HomeScreen> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
-            Column(
-              children: [
-                _header,
-                _userName
-              ],
-            )
+            Column(children: [_header, _userName(context)]),
           ],
-        )
+        ),
       ),
     );
   }
@@ -38,10 +33,17 @@ class _HomeStateScreen extends State<HomeScreen> {
           SizedBox(child: Icon(Icons.menu, size: 35, color: Colors.grey)),
           Row(
             children: [
-              SizedBox(child: Icon(Icons.notifications, size: 35, color: Colors.grey)),
-              SizedBox(width: 15,),
-              SizedBox(child: Icon(Icons.account_circle_outlined
-              , size: 35, color: Colors.grey)),
+              SizedBox(
+                child: Icon(Icons.notifications, size: 35, color: Colors.grey),
+              ),
+              SizedBox(width: 15),
+              SizedBox(
+                child: Icon(
+                  Icons.account_circle_outlined,
+                  size: 35,
+                  color: Colors.grey,
+                ),
+              ),
             ],
           ),
         ],
@@ -49,7 +51,9 @@ class _HomeStateScreen extends State<HomeScreen> {
     );
   }
 
-  Widget get _userName{
+  Widget _userName(BuildContext context) {
+    final String username =
+        ModalRoute.of(context)!.settings.arguments as String;
     return Padding(
       padding: EdgeInsets.only(top: 5, left: 30, bottom: 20),
       child: Column(
@@ -57,11 +61,21 @@ class _HomeStateScreen extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(child: Text("Hello, ", style: TextStyle(color: Colors.redAccent, fontSize: 20),),),
-              SizedBox(width: 10,),
-              SizedBox(child: Text("Rithysak", style: TextStyle(color: Colors.redAccent, fontSize: 20),),)
+              SizedBox(
+                child: Text(
+                  "Hello, ",
+                  style: TextStyle(color: Colors.redAccent, fontSize: 20),
+                ),
+              ),
+              SizedBox(width: 10),
+              SizedBox(
+                child: Text(
+                  "$username!",
+                  style: TextStyle(color: Colors.redAccent, fontSize: 20),
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

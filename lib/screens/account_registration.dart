@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
-import 'package:homeworks_01/screens/login_screen.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class AccountRegistration extends StatefulWidget {
@@ -18,11 +17,21 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   bool _isValidPass = false;
 
+  bool _isValidFullName = false;
+
+  bool _isValidUsername = false;
+
   bool _obscureText = false;
 
-  final bool _isValidText = false;
-
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _usernameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +78,15 @@ class _accountStateRegistration extends State<AccountRegistration> {
           }
           return null;
         },
+        onChanged: (value) {
+          final isValidName = RegExp(
+            r'^[a-zA-Z]+(?: [a-zA-Z]+)+$',
+          ).hasMatch(value.trim());
+
+          setState(() {
+            _isValidFullName = isValidName;
+          });
+        },
         style: TextStyle(fontSize: 15, color: Colors.black),
         decoration: InputDecoration(
           labelText: "Fullname",
@@ -77,7 +95,10 @@ class _accountStateRegistration extends State<AccountRegistration> {
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),
-          suffixIcon: Icon(Icons.check_circle),
+          suffixIcon:
+              _isValidFullName
+                  ? Icon(Icons.check_circle, color: Colors.green)
+                  : Icon(Icons.check_circle),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -102,6 +123,15 @@ class _accountStateRegistration extends State<AccountRegistration> {
           }
           return null;
         },
+        onChanged: (value) {
+          final isValidUsername = RegExp(
+            r'^[a-zA-Z0-9._]{3,20}$',
+          ).hasMatch(value);
+
+          setState(() {
+            _isValidUsername = isValidUsername;
+          });
+        },
         decoration: InputDecoration(
           labelText: "Username",
           labelStyle: TextStyle(
@@ -109,7 +139,11 @@ class _accountStateRegistration extends State<AccountRegistration> {
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),
-          suffixIcon: Icon(Icons.check_circle),
+          suffixIcon:
+              _isValidUsername
+                  ? Icon(Icons.check_circle, color: Colors.green)
+                  : Icon(Icons.check_circle),
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -187,11 +221,11 @@ class _accountStateRegistration extends State<AccountRegistration> {
         },
         validator: (value) {
           if (value!.isEmpty) {
-            return "Please input password";
+            return "Please input password!";
           }
 
           if (_isValidPass) {
-            return "Please input valid password";
+            return "Six digits or more must be entered!";
           }
           return null;
         },
@@ -239,8 +273,10 @@ class _accountStateRegistration extends State<AccountRegistration> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
+
+            String username = _usernameController.text.trim();
             AppRoutes.key.currentState?.pushReplacementNamed(
-              AppRoutes.mainScreen,
+              AppRoutes.mainScreen, arguments: username
             );
           } else {}
         },

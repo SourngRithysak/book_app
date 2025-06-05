@@ -25,10 +25,10 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _usernameController = TextEditingController();
+  final  TextEditingController _usernameController = TextEditingController();
 
   @override
-  void dispose() {
+  void dispose(){
     _usernameController.dispose();
     super.dispose();
   }
@@ -273,8 +273,8 @@ class _accountStateRegistration extends State<AccountRegistration> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-
             String username = _usernameController.text.trim();
+
             AppRoutes.key.currentState?.pushReplacementNamed(
               AppRoutes.mainScreen, arguments: username
             );

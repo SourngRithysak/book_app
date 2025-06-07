@@ -1,8 +1,10 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
+import 'package:homeworks_01/screens/social_login.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class AccountRegistration extends StatefulWidget {
@@ -23,15 +25,18 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   bool _obscureText = false;
 
+  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
-  final  TextEditingController _usernameController = TextEditingController();
-
-  @override
-  void dispose(){
-    _usernameController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose(){
+  //   _usernameController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +56,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
             _password,
             _createBtn,
             _or,
-            _faceAndMail,
+            SocialLogin(),
             _login(context),
           ],
         ),
@@ -78,6 +83,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
           }
           return null;
         },
+        controller: _fullnameController,
         onChanged: (value) {
           final isValidName = RegExp(
             r'^[a-zA-Z]+(?: [a-zA-Z]+)+$',
@@ -116,6 +122,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
     return Padding(
       padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 20),
       child: TextFormField(
+        controller: _usernameController,
         style: TextStyle(fontSize: 15, color: Colors.black),
         validator: (value) {
           if (value!.isEmpty) {
@@ -161,6 +168,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
     return Padding(
       padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 20),
       child: TextFormField(
+        controller: _emailController,
         style: TextStyle(fontSize: 15, color: Colors.black),
         onChanged: (value) {
           if (value.contains("@")) {
@@ -230,6 +238,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
           return null;
         },
         obscureText: _obscureText,
+        controller: _passwordController,
         decoration: InputDecoration(
           labelText: "Password",
           labelStyle: TextStyle(
@@ -273,11 +282,16 @@ class _accountStateRegistration extends State<AccountRegistration> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            String username = _usernameController.text.trim();
+            String fullname = _fullnameController.text;
+            String username = _usernameController.text;
+            String email = _emailController.text;
+            String password = _passwordController.text;
 
             AppRoutes.key.currentState?.pushReplacementNamed(
-              AppRoutes.mainScreen, arguments: username
+              AppRoutes.mainScreen,
             );
+
+            AuthSharePref.register(fullname, username, email, password);
           } else {}
         },
         child: Text(

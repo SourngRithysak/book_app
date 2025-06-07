@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
+import 'package:homeworks_01/screens/social_login.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginStateScreen extends State<LoginScreen> {
-  bool _isValidUsername = false;
+  bool _isValidEmail = false;
 
   bool _isValidPass = false;
 
@@ -19,13 +21,8 @@ class _LoginStateScreen extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _usernameController = TextEditingController();
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    super.dispose();
-  }
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +34,12 @@ class _LoginStateScreen extends State<LoginScreen> {
             children: [
               _logo,
               SizedBox(height: 25),
-              _userTxt,
+              _emailTxt,
               _passtxt,
               _forgetPass,
               _loginBtn(context),
               _or,
-              _faceAndMail,
+              SocialLogin(),
               _register(context),
             ],
           ),
@@ -64,53 +61,7 @@ class _LoginStateScreen extends State<LoginScreen> {
       child: Text("Or", style: TextStyle(color: Colors.grey)),
     );
   }
-
-  Widget get _faceAndMail {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 0, bottom: 35),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              child: TextButton(
-                style: ButtonStyle(
-                  foregroundColor: WidgetStateProperty.all(Colors.black),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountOptionsScreen(),
-                    ),
-                  );
-                },
-                child: Icon(Icons.facebook_sharp, color: Colors.blue, size: 30),
-              ),
-            ),
-            SizedBox(width: 5),
-            SizedBox(
-              child: TextButton(
-                style: ButtonStyle(
-                  foregroundColor: WidgetStateProperty.all(Colors.black),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountOptionsScreen(),
-                    ),
-                  );
-                },
-                child: Icon(Icons.mail, color: Colors.red, size: 30),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
+  
   Widget _register(BuildContext context) {
     return Center(
       child: Padding(
@@ -144,36 +95,38 @@ class _LoginStateScreen extends State<LoginScreen> {
     );
   }
 
-  Widget get _userTxt {
+  Widget get _emailTxt {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 15),
+      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 20),
       child: TextFormField(
-        controller: _usernameController,
+        controller: _emailController,
         style: TextStyle(fontSize: 15, color: Colors.black),
+        onChanged: (value) {
+          if (value.contains("@")) {
+            setState(() {
+              _isValidEmail = true;
+            });
+          } else {
+            setState(() {
+              _isValidEmail = false;
+            });
+          }
+        },
         validator: (value) {
           if (value!.isEmpty) {
-            return "PLease input username!";
+            return "Please input email!";
           }
           return null;
         },
-        onChanged: (value) {
-          final isValidUsername = RegExp(
-            r'^[a-zA-Z0-9._]{3,20}$',
-          ).hasMatch(value);
-
-          setState(() {
-            _isValidUsername = isValidUsername;
-          });
-        },
         decoration: InputDecoration(
-          labelText: "Username",
+          labelText: "Email",
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),
           suffixIcon:
-              _isValidUsername
+              _isValidEmail
                   ? Icon(Icons.check_circle, color: Colors.green)
                   : Icon(Icons.check_circle),
           focusedBorder: OutlineInputBorder(
@@ -193,6 +146,7 @@ class _LoginStateScreen extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 5),
       child: TextFormField(
+        controller: _passwordController,
         onChanged: (value) {
           if (value.length < 6) {
             setState(() {
@@ -288,11 +242,14 @@ class _LoginStateScreen extends State<LoginScreen> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            String username = _usernameController.text.trim();
+            String email = _emailController.text;
+            String password = _passwordController.text;
 
             AppRoutes.key.currentState?.pushReplacementNamed(
-              AppRoutes.mainScreen, arguments: username
+              AppRoutes.mainScreen,
             );
+
+            AuthSharePref.login(email, password);
           } else {}
         },
         child: Text(

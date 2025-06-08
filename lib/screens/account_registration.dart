@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
-import 'package:homeworks_01/screens/account_options_screen.dart';
 import 'package:homeworks_01/screens/social_login.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
@@ -308,52 +307,6 @@ class _accountStateRegistration extends State<AccountRegistration> {
     return Padding(
       padding: const EdgeInsets.only(top: 15, bottom: 10),
       child: Text("Or", style: TextStyle(color: Colors.grey)),
-    );
-  }
-
-  Widget get _faceAndMail {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 0, bottom: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              child: TextButton(
-                style: ButtonStyle(
-                  foregroundColor: WidgetStateProperty.all(Colors.black),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountOptionsScreen(),
-                    ),
-                  );
-                },
-                child: Icon(Icons.facebook_sharp, color: Colors.blue, size: 30),
-              ),
-            ),
-            SizedBox(width: 5),
-            SizedBox(
-              child: TextButton(
-                style: ButtonStyle(
-                  foregroundColor: WidgetStateProperty.all(Colors.black),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountOptionsScreen(),
-                    ),
-                  );
-                },
-                child: Icon(Icons.mail, color: Colors.red, size: 30),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 

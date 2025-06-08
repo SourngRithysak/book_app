@@ -2,7 +2,6 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/screens/favorite_screen.dart';
 import 'package:homeworks_01/screens/home_screen.dart';
-import 'package:homeworks_01/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

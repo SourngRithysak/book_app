@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homeworks_01/data/auth_share_pref.dart';
-import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {

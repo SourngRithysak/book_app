@@ -23,7 +23,7 @@ class AuthSharePref {
 
   static Future<void> logout() async{
     final prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    await prefs.clear();
   }
 
 }

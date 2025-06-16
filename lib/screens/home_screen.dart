@@ -56,19 +56,25 @@ class _HomeStateScreen extends State<HomeScreen> {
       automaticallyImplyLeading: false,
       title: Row(
         children: [
+          // SizedBox(
+          //   child: Text(
+          //     "Hi, ",
+          //     style: TextStyle(color: Colors.redAccent, fontSize: 25,),
+          //   ),
+          // ),
+          // SizedBox(width: 10),
+          // SizedBox(
+          //   child: Text(
+          //     "$fullName",
+          //     style: TextStyle(color: Colors.redAccent, fontSize: 25, fontWeight: FontWeight.bold),
+          //   ),
+          // ),
           SizedBox(
-            child: Text(
-              "Hi, ",
-              style: TextStyle(color: Colors.redAccent, fontSize: 20),
-            ),
-          ),
-          SizedBox(width: 10),
-          SizedBox(
-            child: Text(
-              "$fullName",
-              style: TextStyle(color: Colors.redAccent, fontSize: 20),
-            ),
-          ),
+            child: IconButton(onPressed: () {
+
+            }, 
+            icon: Icon(Icons.menu, color: Colors.redAccent, size: 35,)),
+          )
         ],
       ),
       elevation: 2,
@@ -78,8 +84,9 @@ class _HomeStateScreen extends State<HomeScreen> {
             "$_cartItemCount",
             style: TextStyle(color: Colors.white),
           ),
-          child: Icon(Icons.shopping_cart),
+          child: Icon(Icons.shopping_cart, size: 28, color: Colors.redAccent,),
         ),
+        SizedBox(width: 5,),
         IconButton(
           onPressed: () {
             Navigator.push(
@@ -90,7 +97,7 @@ class _HomeStateScreen extends State<HomeScreen> {
           icon: Icon(
             Icons.account_circle_outlined,
             color: Colors.redAccent,
-            size: 30,
+            size: 35,
           ),
         ),
       ],
@@ -121,19 +128,19 @@ class _HomeStateScreen extends State<HomeScreen> {
 
   Widget get _welcomeWidget {
     return Padding(
-      padding: EdgeInsets.only(left: 10, top: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, top: 20, bottom: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Hi, $fullName",
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 40,
               fontWeight: FontWeight.bold,
               color: Colors.redAccent,
             ),
           ),
-          Text("What do you want to read today?"),
+          Text("What do you want to read today?", style: TextStyle(fontSize: 15),),
         ],
       ),
     );
@@ -148,10 +155,10 @@ class _HomeStateScreen extends State<HomeScreen> {
           prefixIcon: Icon(Icons.search),
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [Icon(Icons.voice_chat), Icon(Icons.search_off)],
+            children: [IconButton(onPressed: () {}, icon: Image.asset("assets/images/voice_over.png", fit: BoxFit.contain, width: 30,),), IconButton(onPressed: () {}, icon: Image.asset("assets/images/slider_icon.png", width: 30, fit: BoxFit.contain,)), SizedBox(width: 2,)],
           ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-          hintText: "Saerch...",
+          hintText: "Search...",
         ),
       ),
     );
@@ -159,15 +166,15 @@ class _HomeStateScreen extends State<HomeScreen> {
 
   Widget get _topTitleWidget {
     return Padding(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(left: 20, top: 5, right: 10, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             "ថ្មីៗ",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
           ),
-          Icon(Icons.navigate_next),
+          Icon(Icons.navigate_next, color: Colors.grey,),
         ],
       ),
     );
@@ -177,7 +184,7 @@ class _HomeStateScreen extends State<HomeScreen> {
     final cartItems =
         List.generate(10, (i) {
           return Padding(
-            padding: EdgeInsets.only(right: 8),
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: Card(
               elevation: 2,
               child: Column(

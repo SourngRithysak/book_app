@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homeworks_01/screens/login_screen.dart';
+import 'package:homeworks_01/data/auth_share_pref.dart';
+import 'package:homeworks_01/routes/app_routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -27,15 +28,17 @@ class _ProfileStateScreen extends State<ProfileScreen> {
               ),
             ),
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => LoginScreen(),
-                ),
-                ModalRoute.withName('/'),
-              );
 
-              // AuthSharePref.logout();
+              AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.loginScreen);
+              AuthSharePref.logout();
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (BuildContext context) => LoginScreen(),
+              //   ),
+              //   ModalRoute.withName('/'),
+              // );
+              
             },
             child: Text(
               'Logout',

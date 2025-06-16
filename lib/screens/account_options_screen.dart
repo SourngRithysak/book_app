@@ -57,7 +57,7 @@ class AccountOptionsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {
-          AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.loginScreen);
+          AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.mainScreen);
         },
         child: const Text('Log In as Guest'),
       ),

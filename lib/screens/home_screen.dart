@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
+import 'package:homeworks_01/data/file_strorage_service.dart';
 import 'package:homeworks_01/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,12 +13,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeStateScreen extends State<HomeScreen> {
-  String? fullName = "Guest";
+  String? fullName;
+
+  int? _cartItemCount = 0;
 
   @override
   void initState() {
     super.initState();
     loadUser();
+    _loadOrder();
+  }
+
+  Future<void> _loadOrder() async {
+    List<String> orders = await FileStrorageService.getOrder();
+    setState(() {
+      _cartItemCount = orders.length;
+    });
   }
 
   Future<void> loadUser() async {
@@ -25,57 +37,23 @@ class _HomeStateScreen extends State<HomeScreen> {
     String? username = prefs.getString(AuthSharePref.FULL_NAME);
     String? email = prefs.getString("email");
 
-    //await Future.delayed(Duration(seconds: 2));
+    String? subUserName = email != null ? email.split("@")[0] : null;
+
     setState(() {
-      fullName = username ?? email ?? "Guest";
+      fullName = username ?? subUserName ?? "Guest";
     });
+
+    print("Üser data loaded");
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 249, 243, 243),
-      body: Expanded(
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            Column(children: [_appbar(context)]),
-          ],
-        ),
-      ),
-    );
+    return Scaffold(appBar: _appbar(context), body: _body);
   }
 
-  // Widget get _appbar {
-  //   return Padding(
-  //     padding: EdgeInsets.only(top: 30, right: 20, left: 20, bottom: 10),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       mainAxisSize: MainAxisSize.max,
-  //       children: [
-  //         SizedBox(child: Icon(Icons.menu, size: 35, color: Colors.redAccent)),
-  //         Row(
-  //           children: [
-  //             SizedBox(
-  //               child: Icon(Icons.notifications, size: 35, color: Colors.redAccent),
-  //             ),
-  //             SizedBox(width: 15),
-  //             SizedBox(
-  //               child: Icon(
-  //                 Icons.account_circle_outlined,
-  //                 size: 35,
-  //                 color: Colors.redAccent,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget _appbar(BuildContext context) {
+  PreferredSizeWidget _appbar(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Row(
         children: [
           SizedBox(
@@ -93,12 +71,15 @@ class _HomeStateScreen extends State<HomeScreen> {
           ),
         ],
       ),
+      elevation: 2,
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.notifications, size: 30, color: Colors.redAccent),
+        badges.Badge(
+          badgeContent: Text(
+            "$_cartItemCount",
+            style: TextStyle(color: Colors.white),
+          ),
+          child: Icon(Icons.shopping_cart),
         ),
-        SizedBox(width: 10),
         IconButton(
           onPressed: () {
             Navigator.push(
@@ -116,32 +97,138 @@ class _HomeStateScreen extends State<HomeScreen> {
     );
   }
 
-  //   Widget _userName(BuildContext context) {
-  //     return Padding(
-  //       padding: EdgeInsets.only(top: 5, left: 30, bottom: 20),
-  //       child: Column(
-  //         children: [
-  //           Row(
-  //             mainAxisAlignment: MainAxisAlignment.start,
-  //             children: [
-  //               SizedBox(
-  //                 child: Text(
-  //                   "Hello, ",
-  //                   style: TextStyle(color: Colors.redAccent, fontSize: 20),
-  //                 ),
-  //               ),
-  //               SizedBox(width: 10),
-  //               SizedBox(
-  //                 child: Text(
-  //                   "$fullName",
-  //                   style: TextStyle(color: Colors.redAccent, fontSize: 20),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //     );
-  //   }
-  // }
+  Widget get _body {
+    return Expanded(
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          _welcomeWidget,
+          _searchWidget,
+          _topTitleWidget,
+          _topProductListWidget,
+        ],
+      ),
+    );
+  }
+
+  Widget get _slides {
+    return Image.asset(
+      "assets/images/khmer_book.png",
+      height: 150,
+      fit: BoxFit.cover,
+    );
+  }
+
+  Widget get _welcomeWidget {
+    return Padding(
+      padding: EdgeInsets.only(left: 10, top: 5, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Hi, $fullName",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.redAccent,
+            ),
+          ),
+          Text("What do you want to read today?"),
+        ],
+      ),
+    );
+  }
+
+  Widget get _searchWidget {
+    return Padding(
+      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+      child: TextField(
+        onChanged: (value) {},
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          suffixIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [Icon(Icons.voice_chat), Icon(Icons.search_off)],
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          hintText: "Saerch...",
+        ),
+      ),
+    );
+  }
+
+  Widget get _topTitleWidget {
+    return Padding(
+      padding: EdgeInsets.only(left: 10, right: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "ថ្មីៗ",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Icon(Icons.navigate_next),
+        ],
+      ),
+    );
+  }
+
+  Widget get _topProductListWidget {
+    final cartItems =
+        List.generate(10, (i) {
+          return Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: Card(
+              elevation: 2,
+              child: Column(
+                children: [
+                  Image.asset("assets/images/khmer_book.png", height: 200),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          FileStrorageService.saveOrder(i, 21.99, 1, 20);
+
+                          final alert = AlertDialog(
+                            title: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                              size: 100,
+                            ),
+                            content: Text("Order saved successfully"),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Ok"),
+                              ),
+                            ],
+                          );
+
+                          showDialog(
+                            context: context,
+                            builder: (context) => alert,
+                          );
+                        },
+                        icon: Icon(Icons.add),
+                      ),
+                      Text(
+                        "1",
+                        style: TextStyle(fontSize: 18, color: Colors.redAccent),
+                      ),
+                      IconButton(onPressed: () {}, icon: Icon(Icons.remove)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList();
+
+    return SizedBox(
+      height: 258,
+      child: ListView(scrollDirection: Axis.horizontal, children: cartItems),
+    );
+  }
 }

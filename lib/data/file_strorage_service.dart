@@ -1,39 +1,38 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
-class FileStrorageService {
+class FileStorageService {
+  // Order file path
+  static String orderPath = "assets/images/order.txt";
 
-  // Order file part
-  static String orderPart = "assets/data/order.txt";
-
-  // Book id=1,Price=2000,qty=1,discount=10
-  static void saveOrder(int bookid, double price, int qty, int discount) async {
-
-    // reference file
-    final file = File(orderPart);
+  static Future<void> saveOrder(
+    int bookId,
+    double price,
+    int qty,
+    int discount,
+  ) async {
+    // reference a file
+    final file = File(orderPath);
+    // Check exist file
     bool isExistFile = await file.exists();
-
-    if(!isExistFile){
+    if (!isExistFile) {
       file.create();
     }
-
-    String data = "bookid=$bookid, price=$price, qty=$qty, discount=$discount";
-
+    // bookId=1,price=2000,qty=1,discount=10
+    String data = "bookId=$bookId,price=$price,qty=$qty,discount=$discount";
     file.openWrite(mode: FileMode.append).writeln(data);
   }
 
-  static Future<List<String>> getOrder() async {
-    final file = File(orderPart);
-
+  static Future<List<String>> getOrders() async {
+    final file = File(orderPath);
     // Check exist file
     bool isExistFile = await file.exists();
-    if(!isExistFile){
+    if (!isExistFile) {
       file.create();
     }
-
     final lines = await file.readAsLines();
-    print("Data: $lines");
+    print("Data : $lines");
     return lines;
-
   }
-
 }

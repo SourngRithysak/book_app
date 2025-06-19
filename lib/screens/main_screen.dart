@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:homeworks_01/screens/cart_screen.dart';
 import 'package:homeworks_01/screens/favorite_screen.dart';
 import 'package:homeworks_01/screens/home_screen.dart';
 
@@ -13,7 +14,7 @@ class MainScreen extends StatefulWidget {
 class _MainStateScreen extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final screenLists = [HomeScreen(), FavoriteScreen() , HomeScreen(), HomeScreen()];
+  List<Widget> screenLists = [HomeScreen(), FavoriteScreen() , CartScreen(), HomeScreen()];
 
   @override
   Widget build(BuildContext context) {

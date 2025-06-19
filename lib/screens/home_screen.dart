@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/data/file_strorage_service.dart';
@@ -17,6 +19,20 @@ class _HomeStateScreen extends State<HomeScreen> {
 
   int? _cartItemCount = 0;
 
+  int quantity = 1;
+
+  void _IncreaseQuantity(){
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void _DecreaseQuantity(){
+    setState(() {
+      if(quantity > 1) quantity--;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +41,7 @@ class _HomeStateScreen extends State<HomeScreen> {
   }
 
   Future<void> _loadOrder() async {
-    List<String> orders = await FileStrorageService.getOrder();
+    List<String> orders = await FileStorageService.getOrders();
     setState(() {
       _cartItemCount = orders.length;
     });
@@ -118,14 +134,6 @@ class _HomeStateScreen extends State<HomeScreen> {
     );
   }
 
-  Widget get _slides {
-    return Image.asset(
-      "assets/images/khmer_book.png",
-      height: 150,
-      fit: BoxFit.cover,
-    );
-  }
-
   Widget get _welcomeWidget {
     return Padding(
       padding: EdgeInsets.only(left: 25, top: 20, bottom: 25),
@@ -155,9 +163,10 @@ class _HomeStateScreen extends State<HomeScreen> {
           prefixIcon: Icon(Icons.search),
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [IconButton(onPressed: () {}, icon: Image.asset("assets/images/voice_over.png", fit: BoxFit.contain, width: 30,),), IconButton(onPressed: () {}, icon: Image.asset("assets/images/slider_icon.png", width: 30, fit: BoxFit.contain,)), SizedBox(width: 2,)],
+            children: [IconButton(onPressed: () {}, icon: Image.asset("assets/images/voice_over.png", fit: BoxFit.contain, width: 30,),), IconButton(onPressed: () {}, icon: Image.asset("assets/images/slider_icon.png", width: 30, fit: BoxFit.contain,)), SizedBox(width: 4,)],
           ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(7)),
           hintText: "Search...",
         ),
       ),
@@ -184,7 +193,7 @@ class _HomeStateScreen extends State<HomeScreen> {
     final cartItems =
         List.generate(10, (i) {
           return Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.only(right: 8),
             child: Card(
               elevation: 2,
               child: Column(
@@ -193,38 +202,39 @@ class _HomeStateScreen extends State<HomeScreen> {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {
-                          FileStrorageService.saveOrder(i, 21.99, 1, 20);
+                        // onPressed: () {
+                          // FileStorageService.saveOrder(i, 2000, 1, 20);
 
-                          final alert = AlertDialog(
-                            title: Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                              size: 100,
-                            ),
-                            content: Text("Order saved successfully"),
-                            actions: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            ],
-                          );
+                          // final alert = AlertDialog(
+                          //   title: Icon(
+                          //     Icons.check_circle,
+                          //     color: Colors.green,
+                          //     size: 100,
+                          //   ),
+                          //   content: Text("Order saved successfully"),
+                          //   actions: [
+                          //     ElevatedButton(
+                          //       onPressed: () {
+                          //         Navigator.pop(context);
+                          //       },
+                          //       child: Text("Ok"),
+                          //     ),
+                          //   ],
+                          // );
 
-                          showDialog(
-                            context: context,
-                            builder: (context) => alert,
-                          );
-                        },
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) => alert,
+                          // );
+                        // },
+                        onPressed: _IncreaseQuantity,
                         icon: Icon(Icons.add),
                       ),
                       Text(
-                        "1",
+                        "$quantity",
                         style: TextStyle(fontSize: 18, color: Colors.redAccent),
                       ),
-                      IconButton(onPressed: () {}, icon: Icon(Icons.remove)),
+                      IconButton(onPressed: _DecreaseQuantity, icon: Icon(Icons.remove)),
                     ],
                   ),
                 ],
@@ -233,9 +243,15 @@ class _HomeStateScreen extends State<HomeScreen> {
           );
         }).toList();
 
-    return SizedBox(
-      height: 258,
-      child: ListView(scrollDirection: Axis.horizontal, children: cartItems),
+    return Padding(
+      padding: EdgeInsets.only(left: 10),
+      child: SizedBox(
+        height: 258,
+        child: ListView(
+          scrollDirection: Axis.horizontal, 
+          children: cartItems
+        ),
+      ),
     );
   }
 }

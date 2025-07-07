@@ -21,7 +21,7 @@ class _ApiStateConnected extends State<ApiConnected> {
 
   Future<void> fetchUsers() async {
     try {
-      final url = Uri.parse('http://192.168.1.26:5000/api/user/getUserData');
+      final url = Uri.parse('http://localhost:5000/api/user/getUserData');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -79,6 +79,8 @@ class _ApiStateConnected extends State<ApiConnected> {
 
     return ListView.builder(
       itemCount: userLists.length,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       itemBuilder: (context, index) {
         final user = userLists[index];
         return ListTile(

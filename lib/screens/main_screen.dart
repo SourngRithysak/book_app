@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:homeworks_01/screens/cart_screen.dart';
 import 'package:homeworks_01/screens/favorite_screen.dart';
 import 'package:homeworks_01/screens/home_screen.dart';
+import 'package:homeworks_01/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,7 +15,7 @@ class MainScreen extends StatefulWidget {
 class _MainStateScreen extends State<MainScreen> {
   int _currentIndex = 0;
 
-  List<Widget> screenLists = [HomeScreen(), FavoriteScreen() , CartScreen(), HomeScreen()];
+  List<Widget> screenLists = [HomeScreen(), FavoriteScreen() , CartScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

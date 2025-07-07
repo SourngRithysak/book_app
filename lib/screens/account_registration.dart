@@ -66,7 +66,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
   Widget get _logo {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 50, bottom: 0),
+        padding: const EdgeInsets.only(),
         child: LogoWidget(),
       ),
     );
@@ -74,7 +74,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   Widget get _fullName {
     return Padding(
-      padding: EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 10),
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
@@ -119,7 +119,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   Widget get _userName {
     return Padding(
-      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 10),
       child: TextFormField(
         controller: _usernameController,
         style: TextStyle(fontSize: 15, color: Colors.black),
@@ -165,7 +165,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   Widget get _email {
     return Padding(
-      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 10),
       child: TextFormField(
         controller: _emailController,
         style: TextStyle(fontSize: 15, color: Colors.black),
@@ -212,7 +212,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
 
   Widget get _password {
     return Padding(
-      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 35),
+      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 30),
       child: TextFormField(
         style: TextStyle(fontSize: 15, color: Colors.black),
         onChanged: (value) {

@@ -50,7 +50,7 @@ class _LoginStateScreen extends State<LoginScreen> {
 
   Widget get _logo {
     return Padding(
-      padding: const EdgeInsets.only(top: 60, bottom: 60),
+      padding: const EdgeInsets.only(),
       child: LogoWidget(),
     );
   }
@@ -98,7 +98,7 @@ class _LoginStateScreen extends State<LoginScreen> {
 
   Widget get _emailTxt {
     return Padding(
-      padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(top: 50, right: 20, left: 20, bottom: 20),
       child: TextFormField(
         controller: _emailController,
         style: TextStyle(fontSize: 15, color: Colors.black),

@@ -3,8 +3,9 @@
 import 'dart:io';
 
 class FileStorageService {
+
   // Order file path
-  static String orderPath = "assets/images/order.txt";
+  static String orderPath = "assets/data/order.txt";
 
   static Future<void> saveOrder(
     int bookId,

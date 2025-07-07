@@ -72,7 +72,8 @@ class _LoginStateScreen extends State<LoginScreen> {
             SizedBox(
               child: Text(
                 "Don't have an account yet?",
-                style: TextStyle(color: Colors.grey, fontSize: 18),
+                style: TextStyle(color: Colors.grey, fontSize: 18,
+                ),
               ),
             ),
             SizedBox(width: 5),
@@ -230,33 +231,35 @@ class _LoginStateScreen extends State<LoginScreen> {
   }
 
   Widget _loginBtn(BuildContext context) {
-    return SizedBox(
-      // width: MediaQuery.of(context).size.width,
-      width: 370,
-      height: 50,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        ),
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            String email = _emailController.text;
-            String password = _passwordController.text;
-
-            AppRoutes.key.currentState?.pushReplacementNamed(
-              AppRoutes.mainScreen,
-            );
-
-            AuthSharePref.login(email, password);
-          } else {}
-        },
-        child: Text(
-          'Log In',
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 18),
+    return Padding(
+      padding: EdgeInsets.only(top: 0, left: 20, right: 20, bottom: 0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              String email = _emailController.text;
+              String password = _passwordController.text;
+      
+              AppRoutes.key.currentState?.pushReplacementNamed(
+                AppRoutes.mainScreen,
+              );
+      
+              AuthSharePref.login(email, password);
+            } else {}
+          },
+          child: Text(
+            'Log In',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 18),
+          ),
         ),
       ),
     );

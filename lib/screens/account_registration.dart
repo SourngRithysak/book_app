@@ -270,34 +270,37 @@ class _accountStateRegistration extends State<AccountRegistration> {
   }
 
   Widget get _createBtn {
-    return SizedBox(
-      width: 370,
-      height: 50,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        ),
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            String fullname = _fullnameController.text;
-            String username = _usernameController.text;
-            String email = _emailController.text;
-            String password = _passwordController.text;
-
-            AppRoutes.key.currentState?.pushReplacementNamed(
-              AppRoutes.mainScreen,
-            );
-
-            AuthSharePref.register(fullname, username, email, password);
-          } else {}
-        },
-        child: Text(
-          'Create Account',
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 18),
+    return Padding(
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              String fullname = _fullnameController.text;
+              String username = _usernameController.text;
+              String email = _emailController.text;
+              String password = _passwordController.text;
+      
+              AppRoutes.key.currentState?.pushReplacementNamed(
+                AppRoutes.mainScreen,
+              );
+      
+              AuthSharePref.register(fullname, username, email, password);
+            } else {}
+          },
+          child: Text(
+            'Create Account',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 18),
+          ),
         ),
       ),
     );

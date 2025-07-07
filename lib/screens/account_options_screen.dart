@@ -38,7 +38,9 @@ class AccountOptionsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {
-          AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.accountRegistration);
+          AppRoutes.key.currentState?.pushReplacementNamed(
+            AppRoutes.accountRegistration,
+          );
         },
         child: Text('Create Account'),
       ),
@@ -57,7 +59,9 @@ class AccountOptionsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: () {
-          AppRoutes.key.currentState?.pushReplacementNamed(AppRoutes.mainScreen);
+          AppRoutes.key.currentState?.pushReplacementNamed(
+            AppRoutes.mainScreen,
+          );
         },
         child: const Text('Log In as Guest'),
       ),

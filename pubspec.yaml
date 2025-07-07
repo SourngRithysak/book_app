@@ -39,6 +39,7 @@ dependencies:
   curved_navigation_bar: ^1.0.6
   shared_preferences: ^2.5.3
   badges: ^3.1.2
+  http: ^1.4.0
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +66,21 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/data/
+    - assets/data/order.txt
+
+  fonts:
+    - family: Kantumruy_Pro
+      fonts:
+        - asset: assets/fonts/KantumruyPro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/KantumruyPro-Italic.ttf
+          style: italic
+        - asset: assets/fonts/KantumruyPro-Light.ttf
+          weight: 300
+        - asset: assets/fonts/KantumruyPro-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/KantumruyPro-Regular.ttf
+          weight: 400
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

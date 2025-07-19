@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/data/file_strorage_service.dart';
 import 'package:homeworks_01/screens/profile_screen.dart';
@@ -141,8 +142,9 @@ class _MobileBodyState extends State<MobileBody>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Hi, $fullName",
+            'hi'.tr + ', ' + "$fullName",
             style: TextStyle(
+              fontFamily: 'Kantumruy_Pro',
               fontSize: 40,
               fontWeight: FontWeight.bold,
               color: Colors.redAccent,
@@ -202,8 +204,8 @@ class _MobileBodyState extends State<MobileBody>{
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "ថ្មីៗ",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Kantumruy_Pro'),
+            "new".tr,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal, fontFamily: 'Kantumruy_Pro'),
           ),
           Icon(Icons.navigate_next, color: Colors.grey),
         ],

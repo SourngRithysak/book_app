@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:homeworks_01/controllers/cart_controller.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
-import 'package:homeworks_01/data/file_strorage_service.dart';
+import 'package:homeworks_01/models/order.dart';
 import 'package:homeworks_01/screens/profile_screen.dart';
+import 'package:homeworks_01/services/order_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -16,9 +19,10 @@ class MobileBody extends StatefulWidget{
 class _MobileBodyState extends State<MobileBody>{
 
   String? fullName;
-
   int? _cartItemCount = 0;
+  final cartController = Get.put(CartController());
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   int quantity = 1;
 
   void _IncreaseQuantity(){
@@ -37,11 +41,22 @@ class _MobileBodyState extends State<MobileBody>{
   void initState(){
     super.initState();
     _loadOrder();
-    _loadUser();
+    // _loadUser();
+    _currentUser();
+  }
+
+  Future<void> _currentUser() async {
+    final currentUser = await _auth.currentUser;
+    setState(() {
+      final email = currentUser?.email;
+      fullName = email != null ? email.split("@")[0] : "Guest";
+      // fullName = currentUser!.email.split("@")[0] ?? "Guest";
+    });
   }
 
   Future<void> _loadOrder() async{
-    List<String> orders = await FileStorageService.getOrders();
+    final orderService = OrderService.instance;
+    List<Order> orders = await orderService.getOrders();
     setState(() {
       _cartItemCount = orders.length;
     });
@@ -65,6 +80,9 @@ class _MobileBodyState extends State<MobileBody>{
 
   @override
   Widget build(BuildContext context) {
+
+    // final cartProvider = Provider.of<CartProvider>(context, listen: true);
+
     return Scaffold(
       appBar: _appbar(context), body: _body,
     );
@@ -99,10 +117,12 @@ class _MobileBodyState extends State<MobileBody>{
       elevation: 2,
       actions: [
         badges.Badge(
-          badgeContent: Text(
-            "$_cartItemCount",
-            style: TextStyle(color: Colors.white),
-          ),
+          badgeContent: GetBuilder<CartController>(builder: (cartController){
+            return Text(
+              "${cartController.orders.length}",
+              style: TextStyle(color: Colors.white),
+            );
+          }),
           child: Icon(Icons.shopping_cart, size: 28, color: Colors.redAccent),
         ),
         SizedBox(width: 5),
@@ -230,7 +250,16 @@ class _MobileBodyState extends State<MobileBody>{
 
                           _IncreaseQuantity();
                           
-                          FileStorageService.saveOrder(i, 2000, 1, 20);
+                          // FileStorageService.saveOrder(i, 2000, 1, 20);
+
+                          final orderService = OrderService.instance;
+                          final order = Order(
+                            productId: i,
+                            price: 2000,
+                            quantity: 1,
+                            discount: 0
+                          );
+                          orderService.insertOrder(order);
 
                           final alert = AlertDialog(
                             title: Icon(

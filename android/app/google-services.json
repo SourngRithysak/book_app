@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "864985901610",
+    "project_id": "productfb-443b8",
+    "storage_bucket": "productfb-443b8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864985901610:android:55e6c5ef957e4224c6f153",
+        "android_client_info": {
+          "package_name": "com.example.homeworks_01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo1n4IMNZLwDZu9JQPKygnBdubwExjLnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

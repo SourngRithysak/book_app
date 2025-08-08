@@ -1,8 +1,11 @@
 // ignore_for_file: camel_case_types
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
+import 'package:homeworks_01/screens/login_screen.dart';
 import 'package:homeworks_01/screens/social_login.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
@@ -30,6 +33,8 @@ class _accountStateRegistration extends State<AccountRegistration> {
   final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // @override
   // void dispose(){
@@ -288,10 +293,15 @@ class _accountStateRegistration extends State<AccountRegistration> {
               String email = _emailController.text;
               String password = _passwordController.text;
       
-              AppRoutes.key.currentState?.pushReplacementNamed(
-                AppRoutes.mainScreen,
-              );
-      
+              // AppRoutes.key.currentState?.pushReplacementNamed(
+              //   AppRoutes.mainScreen,
+              // );
+
+              print("Full Name: $fullname");
+              print("Email: $email");
+              print("Password: $password");
+
+              _onRegister(email, password);
               AuthSharePref.register(fullname, username, email, password);
             } else {}
           },
@@ -345,4 +355,20 @@ class _accountStateRegistration extends State<AccountRegistration> {
       ),
     );
   }
+
+  Future<void> _onRegister(String email, String password) async {
+    try{
+      await _auth.createUserWithEmailAndPassword(email: email, password: password).then(
+          (UserCredential user){
+            // success
+            print("UserCredential : ${user}");
+            Get.to(LoginScreen());
+          }).catchError((error){
+            print("CatchError : $error");
+      });
+    }catch(e){
+      print("Error: $e");
+    }
+  }
+
 }

@@ -21,7 +21,8 @@ class Message extends Translations {
       "more": "More",
       "titleLang": "Language",
       "subLang": "English",
-      "new": "New"
+      "new": "New",
+      "profile": "Profile"
     },
     "km_KH":{
       "hi": "សួស្តី",
@@ -40,7 +41,8 @@ class Message extends Translations {
       "more": "បន្ថែម",
       "titleLang": "ភាសា",
       "subLang": "ភាសាខ្មែរ",
-      "new": "ថ្មីៗ"
+      "new": "ថ្មីៗ",
+      "profile": "ប្រវត្តិរូប"
     },
     "zh_CN": {
       "hi": "你好",
@@ -60,6 +62,7 @@ class Message extends Translations {
       "titleLang": "语言",
       "subLang": "中文",
       "new": "新的",
+      "profile": "个人资料"
     },
     "ja_JP": {
       "hi": "こんにちは",
@@ -78,7 +81,8 @@ class Message extends Translations {
       "more": "もっと見る",
       "titleLang": "言語",
       "subLang": "日本語",
-      "new": "新しい"
+      "new": "新しい",
+      "profile": "プロフィール"
     },
     "ko_KR": {
       "hi": "안녕하세요",
@@ -98,6 +102,7 @@ class Message extends Translations {
       "titleLang": "언어",
       "subLang": "한국어",
       "new": "새로운",
+      "profile": "프로필"
     }
   };
 

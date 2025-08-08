@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
+import 'package:homeworks_01/screens/main_screen.dart';
 import 'package:homeworks_01/screens/social_login.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
@@ -23,6 +27,8 @@ class _LoginStateScreen extends State<LoginScreen> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -244,15 +250,18 @@ class _LoginStateScreen extends State<LoginScreen> {
           ),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              String email = _emailController.text;
-              String password = _passwordController.text;
+              final email = _emailController.text;
+              final password = _passwordController.text;
       
-              AppRoutes.key.currentState?.pushReplacementNamed(
-                AppRoutes.mainScreen,
-              );
+              // AppRoutes.key.currentState?.pushReplacementNamed(
+              //   AppRoutes.mainScreen,
+              // );
       
               AuthSharePref.login(email, password);
-            } else {}
+              _onLogin(email, password);
+            } else {
+
+            }
           },
           child: Text(
             'Log In',
@@ -263,5 +272,21 @@ class _LoginStateScreen extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _onLogin(String email, String password) async {
+    try{
+      await _auth.signInWithEmailAndPassword(email: email, password: password)
+          .then((UserCredential user){
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Success", style: TextStyle(color: Colors.white, backgroundColor: Colors.green),)));
+            Get.off(MainScreen());
+      }).catchError((error){
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$error")));
+       print("Error");
+      });
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
+      print("Error : $e");
+    }
   }
 }

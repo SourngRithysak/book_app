@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homeworks_01/localization/locales.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>{
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
         title: Text(
-          'Favorite',
+          'favorite'.tr,
           style: TextStyle(
               fontFamily: 'Kantumruy_Pro',
               fontSize: 25,

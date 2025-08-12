@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:homeworks_01/data/auth_share_pref.dart';
 import 'package:homeworks_01/routes/app_routes.dart';
 import 'package:homeworks_01/screens/account_options_screen.dart';
 import 'package:homeworks_01/screens/main_screen.dart';
-import 'package:homeworks_01/screens/social_login.dart';
 import 'package:homeworks_01/widgets/logo_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,7 +44,25 @@ class _LoginStateScreen extends State<LoginScreen> {
               _forgetPass,
               _loginBtn(context),
               _or,
-              SocialLogin(),
+              // SocialLogin(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      _signInWithFacebook();
+                    },
+                    icon: Image.asset("assets/images/facebook_logo.png", width: 70),
+                  ),
+                  SizedBox(width: 4,),
+                  IconButton(
+                    onPressed: () {
+
+                    },
+                    icon: Image.asset("assets/images/google_logo.png", width: 35),
+                  ),
+                ],
+              ),
               _register(context),
             ],
           ),
@@ -287,6 +304,31 @@ class _LoginStateScreen extends State<LoginScreen> {
     }catch(e){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
       print("Error : $e");
+    }
+  }
+  Future<void> _signInWithFacebook() async {
+    try{
+      LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success){
+        print("Token : ${result.accessToken?.tokenString}");
+        // Create OAuthCredential
+        OAuthCredential credential = FacebookAuthProvider.credential(
+          result.accessToken!.tokenString,
+        );
+      //   Sign in with credential
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      //   Remove all screen
+        Get.offAll(MainScreen());
+      }else if(result.status == LoginStatus.cancelled){
+        print("Cancelled");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Cancelled")));
+      }else if(result.status == LoginStatus.failed){
+        print("Error");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
+      }
+    }catch (e) {
+      print("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
     }
   }
 }

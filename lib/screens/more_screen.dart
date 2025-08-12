@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:homeworks_01/controllers/theme_controller.dart';
 import 'package:homeworks_01/screens/account_screen.dart';
 import 'package:homeworks_01/screens/language_screen.dart';
 import 'package:homeworks_01/screens/login_screen.dart';
-import 'package:homeworks_01/screens/profile_screen.dart';
 import 'package:homeworks_01/screens/theme_screen.dart';
 class MoreScreen extends StatefulWidget{
   const MoreScreen({super.key});
@@ -143,7 +143,7 @@ class _CreateStateScreen extends State<MoreScreen>{
     try{
       if(_isLogin){
         Get.to(AccountScreen());
-      }else{
+      }else {
         Get.off(LoginScreen());
       }
     }catch(error){
@@ -154,6 +154,8 @@ class _CreateStateScreen extends State<MoreScreen>{
   Future<void> _logout() async {
     try{
       await _auth.signOut();
+      await FacebookAuth.instance.logOut();
+
       Get.off(LoginScreen());
     }catch (error) {
       print("Error: $error");

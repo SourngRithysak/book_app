@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:homeworks_01/localization/locales.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});

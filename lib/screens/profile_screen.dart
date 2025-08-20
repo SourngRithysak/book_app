@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:homeworks_01/custom/custom_dropdown.dart';
-import 'package:homeworks_01/data/auth_share_pref.dart';
-import 'package:homeworks_01/routes/app_routes.dart';
-import 'package:homeworks_01/screens/api/api_connected.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

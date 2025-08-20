@@ -4,7 +4,6 @@ import 'package:homeworks_01/screens/cart_screen.dart';
 import 'package:homeworks_01/screens/favorite_screen.dart';
 import 'package:homeworks_01/screens/home_screen.dart';
 import 'package:homeworks_01/screens/more_screen.dart';
-import 'package:homeworks_01/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

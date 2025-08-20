@@ -84,6 +84,7 @@ class _CartStateScreen extends State<CartScreen>{
                   ],
                 );
                 showDialog(context: context, builder: (context) => alert);
+                return null;
             },
           );
         },

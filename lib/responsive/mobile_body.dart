@@ -46,7 +46,7 @@ class _MobileBodyState extends State<MobileBody>{
   }
 
   Future<void> _currentUser() async {
-    final currentUser = await _auth.currentUser;
+    final currentUser = _auth.currentUser;
     setState(() {
       final email = currentUser?.email;
       fullName = email != null ? email.split("@")[0] : "Guest";

@@ -29,7 +29,7 @@ class _CreateStateScreen extends State<MoreScreen>{
   }
 
   Future<void> _loadUser() async {
-    final user = await _auth.currentUser!;
+    final user = _auth.currentUser!;
     setState(() {
       _fullName = user.email!.split("@")[0];
       _isLogin = user.email!.isNotEmpty;
@@ -97,7 +97,7 @@ class _CreateStateScreen extends State<MoreScreen>{
               },
             ),
             title: Text("profile".tr, style: TextStyle(fontFamily: 'Kantumruy_Pro')),
-            subtitle: Text("$_fullName"),
+            subtitle: Text(_fullName),
             trailing: Icon(Icons.arrow_forward_ios_outlined),
             onTap: () {
               _validateCurrentUser();

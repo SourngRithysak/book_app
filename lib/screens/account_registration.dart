@@ -361,7 +361,7 @@ class _accountStateRegistration extends State<AccountRegistration> {
       await _auth.createUserWithEmailAndPassword(email: email, password: password).then(
           (UserCredential user){
             // success
-            print("UserCredential : ${user}");
+            print("UserCredential : $user");
             Get.to(LoginScreen());
           }).catchError((error){
             print("CatchError : $error");
